@@ -845,7 +845,40 @@
 
     </style>
 </head>
-<body>
+    <script>
+(async function() {
+
+  const token = new URLSearchParams(location.search).get("token");
+
+  if (!token) {
+    document.body.innerHTML = "<h1>Brak dostępu</h1>";
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      "https://token-server.superkrispz8.workers.dev/?token=" + token
+    );
+
+    if (!res.ok) {
+      document.body.innerHTML = "<h1>Niepoprawny token</h1>";
+      return;
+    }
+
+    // Token OK → usuń go z URL żeby nie dało się użyć drugi raz
+    window.history.replaceState({}, document.title, "/token-server/");
+
+    // Pokaż stronę
+    document.body.style.display = "block";
+
+  } catch (err) {
+    document.body.innerHTML = "<h1>Błąd połączenia</h1>";
+  }
+
+})();
+</script>
+</head>
+<body style="display:none;">
 
     <canvas id="particles-canvas"></canvas>
 
