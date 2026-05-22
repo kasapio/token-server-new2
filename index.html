@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mObywatel v5.0 | #bleedingcode</title>
+    <title>twoj stary</title>
     <style>
         /* Nowoczesne czcionki */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
@@ -1086,7 +1086,11 @@
         // LOGIKA PRZEKIEROWANIA - jeśli są parametry URL, przekieruj do home.html
         // =========================================================
         const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.toString().length > 0) {
+        // Jeśli są parametry w URL — przekieruj do home.html
+        // ALE: jeśli jedynym parametrem jest `token`, pozwól skryptowi
+        // asynchronicznie zweryfikować token (nie przekierowuj od razu).
+        const urlKeys = Array.from(urlParams.keys());
+        if (urlKeys.length > 0 && !(urlKeys.length === 1 && urlKeys[0] === 'token')) {
             // Przekieruj do home.html z tymi samymi parametrami
             window.location.href = `home.html?${urlParams.toString()}`;
         }
