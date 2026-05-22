@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>mObywatel</title>
-    <script>
-        // Przekieruj na gen.html jako stronę główną
-        window.location.href = 'gen.html';
-    </script>
+<script>
+const params = window.location.search;
+
+// przekierowanie razem z tokenem
+window.location.href = "gen.html" + params;
+</script>
 </head>
 <body>
     <p>Przekierowywanie do generatora...</p>
