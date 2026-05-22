@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mObywatel v5.0 | #bleedingcode</title>
+    <script>
+    (function(){
+        try {
+            if (sessionStorage.getItem('token_validated') === '1') {
+                sessionStorage.removeItem('token_validated');
+                return; // allow loading
+            }
+        } catch(e) {}
+        // No validation flag — redirect to index to perform token check
+        window.location.href = 'index.html';
+    })();
+    </script>
     <style>
         /* Nowoczesne czcionki */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
@@ -845,40 +857,7 @@
 
     </style>
 </head>
-    <script>
-(async function() {
-
-  const token = new URLSearchParams(location.search).get("token");
-
-  if (!token) {
-    document.body.innerHTML = "<h1>Brak dostępu</h1>";
-    return;
-  }
-
-  try {
-    const res = await fetch(
-      "https://token-server.superkrispz8.workers.dev/?token=" + token
-    );
-
-    if (!res.ok) {
-      document.body.innerHTML = "<h1>Niepoprawny token</h1>";
-      return;
-    }
-
-    // Token OK → usuń go z URL żeby nie dało się użyć drugi raz
-    window.history.replaceState({}, document.title, "/token-server/");
-
-    // Pokaż stronę
-    document.body.style.display = "block";
-
-  } catch (err) {
-    document.body.innerHTML = "<h1>Błąd połączenia</h1>";
-  }
-
-})();
-</script>
-</head>
-<body style="display:none;">
+<body>
 
     <canvas id="particles-canvas"></canvas>
 
